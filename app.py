@@ -154,7 +154,7 @@ def main():
         except Exception as e:
             st.error(f"Error fetching Firebase data: {e}")
 
-        time.sleep(10)  # Update every 10 seconds
+        time.sleep(1)  # Update every 10 seconds
 
 if __name__ == "__main__":
     main()
