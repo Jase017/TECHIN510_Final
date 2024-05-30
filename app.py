@@ -223,7 +223,7 @@ def main():
             gif_container.markdown(
                 f"""
                 <div style='text-align: center;'>
-                    <img src="data:image/gif;base64,{gif_base64}" width="500" height="400" />
+                    <img src="data:image/gif;base64,{gif_base64}" width="300" height="200" />
                 </div>
                 """,
                 unsafe_allow_html=True
