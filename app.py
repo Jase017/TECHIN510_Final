@@ -161,6 +161,8 @@ def main():
 
     heartrate_container = st.empty()
     barking_container = st.empty()
+    stage_container = st.empty()
+    gif_container = st.empty()
 
     # Initialize previous barking count
     previous_barking_count = None
@@ -217,8 +219,8 @@ def main():
 
             heartrate_container.markdown(f"<p class='data-container'><b>Heartrate:</b>{heartrate}</p>", unsafe_allow_html=True)
             barking_container.markdown(f"<p class='data-container'><b>{barking_message}</b></p>", unsafe_allow_html=True)
-            st.markdown(f"<h2>{stage_message}</h2>", unsafe_allow_html=True)
-            st.markdown(
+            stage_container.markdown(f"<h2>{stage_message}</h2>", unsafe_allow_html=True)
+            gif_container.markdown(
                 f"""
                 <div style='text-align: center;'>
                     <img src="data:image/gif;base64,{gif_base64}" width="500" height="400" />
@@ -229,7 +231,7 @@ def main():
         except Exception as e:
             st.error(f"Error fetching Firebase data: {e}")
 
-        time.sleep(1)  # Update every 1 seconds
+        time.sleep(1)  # Update every 1 second
 
 if __name__ == "__main__":
     main()
