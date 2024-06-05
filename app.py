@@ -223,7 +223,7 @@ def main():
             if previous_barking_count is not None and current_barking_count != previous_barking_count:
                 barking_message = "🐕‍🦺Your dog is barking!🐕‍🦺"
             else:
-                barking_message = "🐕‍🦺Your dog is barking!🐕‍🦺"
+                barking_message = "Your dog is quiet"
 
             previous_barking_count = current_barking_count
 
