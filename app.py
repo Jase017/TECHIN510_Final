@@ -86,32 +86,31 @@ def main():
         }}
         .time {{
             position: fixed;
-            top: 60px;  
+            top: 40px;  
             left: 20px;  
-            font-size: 24px;
+            font-size: 50px;
             font-weight: bold;
             color: black; /* Sets text color to black */
         }}
         .weather {{
             position: fixed;
-            top: 60px;  
+            top: 40px;  
             right: 20px;  
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
             color: black; /* Sets text color to black */
         }}
         .logo {{
             position: fixed;
             bottom: 20px;  
             right: 20px;  
-            width: 150px;  
-            height: 150px;  
+            width: 250px;  
+            height: 250px;  
         }}
         .date {{
             position: fixed;
             bottom: 20px;  
             left: 20px;  
-            font-size: 24px;
+            font-size: 50px;
             font-weight: bold;
             color: black; /* Sets text color to black */
         }}
@@ -124,9 +123,9 @@ def main():
         }}
         h2 {{
             text-align: center;
-            font-size: 28px;
+            font-size: 36px;
             font-weight: bold;
-            color: black; /* Sets text color to black */
+            color: orange; /* Sets text color to black */
             margin-top: 20px; /* Adds margin on top */
         }}
         p {{
@@ -139,6 +138,18 @@ def main():
             white-space: pre-wrap;  /* Allows content to wrap */
             color: black; /* Sets text color to black */
             margin-top: 20px; /* Adds margin on top */
+        }}
+        .center-card {{
+            position: fixed;
+            top: 100px; /* Adjust based on content height */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            background-color: #FFF;  /* Sets card background color to white */
+            border-radius: 10px; /* Rounds the corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+            padding: 20px; /* Adds padding inside the card */
+            text-align: center; /* Centers text */
         }}
         </style>
         <div>
@@ -157,12 +168,11 @@ def main():
     weather_container = st.empty()
 
     # Date container
-    st.markdown(f"<div class='date'><b>Date:</b> {get_date()}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='date'>{get_date()}</div>", unsafe_allow_html=True)
 
-    heartrate_container = st.empty()
-    barking_container = st.empty()
-    stage_container = st.empty()
-    gif_container = st.empty()
+    # Center card for dog data
+    st.markdown("<div class='center-card' id='center-card-container'></div>", unsafe_allow_html=True)
+    center_card_container = st.empty()
 
     # Initialize previous barking count
     previous_barking_count = None
@@ -196,7 +206,7 @@ def main():
                 if stage == "active":
                     stage_message = "Your dog is active!"
                     gif_base64 = active_base64
-                elif stage == "relaxing":
+                elif stage == "relaxing1":
                     stage_message = "Your dog is relaxing!"
                     gif_base64 = relaxing_base64
                 elif stage == "stress":
@@ -213,21 +223,27 @@ def main():
             if previous_barking_count is not None and current_barking_count != previous_barking_count:
                 barking_message = "🐕‍🦺Your dog is barking!🐕‍🦺"
             else:
-                barking_message = "Your dog is quiet"
+                barking_message = "🐕‍🦺Your dog is barking!🐕‍🦺"
 
             previous_barking_count = current_barking_count
 
-            heartrate_container.markdown(f"<p class='data-container'><b>Heartrate:</b>{heartrate}</p>", unsafe_allow_html=True)
-            barking_container.markdown(f"<p class='data-container'><b>{barking_message}</b></p>", unsafe_allow_html=True)
-            stage_container.markdown(f"<h2>{stage_message}</h2>", unsafe_allow_html=True)
-            gif_container.markdown(
-                f"""
-                <div style='text-align: center;'>
-                    <img src="data:image/gif;base64,{gif_base64}" width="300" height="200" />
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            # Update the center card container with current data
+            center_card_container.markdown(
+    f"""
+    <div class='center-card' style='text-align: center;'>
+        <h2>Pawsitive</h2>
+        <p><b>Heartrate:</b> {heartrate}</p>
+        <p><b>{barking_message}</b></p>
+        <p><b>{stage_message}</b></p>
+        <img src="data:image/gif;base64,{gif_base64}" width="400" height="300" />
+        <div style="margin-top: 20px; display: flex; justify-content: center;">
+            <button onclick="handleFirstButton()" style="width: 48%; padding: 10px 20px; font-size: 17px; border-radius: 5px; background-color: orange; color: white;">Real-time Data</button>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
         except Exception as e:
             st.error(f"Error fetching Firebase data: {e}")
 
